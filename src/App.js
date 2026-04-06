@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Booking from "./pages/Booking";
 import Services from "./pages/Services";
 import ServiceDetail from "./pages/ServiceDetail";
+import FloatingChatBot from "./components/FloatingChatBot";
+
 function App() {
   return (
     <Router>
@@ -17,6 +19,8 @@ function App() {
           <Route path="/services/:id" element={<ServiceDetail />} />
         </Routes>
       </main>
+    <FloatingChatBot />
+
       <Footer />
     </Router>
   );

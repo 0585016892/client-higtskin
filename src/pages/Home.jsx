@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import { Button, Typography, Row, Col, Card, Space, Avatar, Divider, Statistic } from "antd";
 import { Sparkles, ArrowRight, ShieldCheck, Crown, Medal, Quote ,User} from "lucide-react";
 import { motion } from "framer-motion";
@@ -13,6 +15,7 @@ export default function Home() {
   }, []);
 
   return (
+  <>
     <div style={{ background: "#fff", overflowX: "hidden" }}>
       
       {/* SECTION 1: HERO - THE LUXURY ENTRANCE */}
@@ -39,12 +42,12 @@ export default function Home() {
                 hoàn hảo nhất của chính bạn bằng công nghệ tương lai.
               </Paragraph>
               <Space size="large">
-                <Button type="primary" size="large" style={styles.btnPrimary}>
-                  ĐẶT LỊCH QUÝ TỘC <ArrowRight size={18} style={{ marginLeft: 8 }} />
-                </Button>
-                <Button size="large" style={styles.btnSecondary}>
-                  KHÁM PHÁ LIỆU TRÌNH
-                </Button>
+                <Link to="/services">
+                  <Button type="primary" size="large" style={styles.btnPrimary}>
+                    KHÁM PHÁ LIỆU TRÌNH 
+                    <ArrowRight size={18} style={{ marginLeft: 8 }} />
+                  </Button>
+                </Link>
               </Space>
             </motion.div>
           </Col>
@@ -175,6 +178,7 @@ export default function Home() {
       </section>
 
     </div>
+    </>
   );
 }
 

@@ -88,12 +88,12 @@ export default function ServiceDetail() {
       <div style={{ paddingTop: 120, paddingBottom: 80, background: "#fff", minHeight: "100vh" }}>
         
         {/* Widget liên hệ nhanh */}
-        <div style={{ position: 'fixed', right: 25, bottom: 30, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {/* <div style={{ position: 'fixed', right: 25, bottom: 30, zIndex: 1000, display: 'flex', flexDirection: 'column', gap: 12 }}>
             <Badge count="Hot">
                 <Button type="primary" shape="circle" size="large" style={{ width: 60, height: 60, background: '#1da1f2', display: 'flex', alignItems: 'center', justifyContent: 'center' }} icon={<MessageCircle size={24} />} onClick={() => window.open('https://zalo.me/your_zalo')} />
             </Badge>
             <Button type="primary" shape="circle" size="large" style={{ width: 60, height: 60, background: '#52c41a', display: 'flex', alignItems: 'center', justifyContent: 'center' }} icon={<Phone size={24} />} onClick={() => window.location.href = 'tel:0336041807'} />
-        </div>
+        </div> */}
 
         <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
           <Space direction="vertical" style={{ marginBottom: 30 }}>

@@ -1,12 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Button, Space, Typography } from "antd";
+import React, { useState, useEffect ,useCallback} from "react";
+import { Button, Space, Typography,message } from "antd";
 import { Menu as MenuIcon, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import settingApi from "../api/settingApi";
 
 const { Text } = Typography;
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+    const [settings, setSettings] = useState([]);
+      const [loading, setLoading] = useState(true);
+    const fetchServices = useCallback(async () => {
+    // setLoading(true);
+    try {
+      const response = await settingApi.getAll(); 
+      setSettings(response|| []);
+    } catch (error) {
+      message.error("Lỗi kết nối API!");
+    } finally {
+      setTimeout(() => setLoading(false), 400);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,12 +50,17 @@ const navStyle = {
     transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
     boxSizing: "border-box", // 👈 QUAN TRỌNG: Ngăn chặn tràn viền
   };
+  
+const name = settings?.site_name?.split(" ") || [];
 
-  return (
+return (
     <nav style={navStyle}>
       <div className="logo">
         <Link to="/" style={{ fontSize: "24px", fontWeight: "800", color: "#eb2f96", letterSpacing: "1px" }}>
-          HIGHSKIN <span style={{ fontWeight: "300", color: scrolled ? "#333" : "#eb2f96" }}>SPA</span>
+         {name[0]}{" "}
+        <span style={{ fontWeight: "300", color: scrolled ? "#333" : "#eb2f96" }}>
+          {name[1]}
+        </span>
         </Link>
       </div>
 

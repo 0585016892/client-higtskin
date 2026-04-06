@@ -1,15 +1,34 @@
-import React from "react";
-import { Row, Col, Typography, Space, Divider } from "antd";
+import React ,{useState,useCallback,useEffect} from "react";
+import { Row, Col, Typography, Space, Divider,message } from "antd";
 import { Facebook, Instagram, Youtube, MapPin, Phone, Mail } from "lucide-react";
+import settingApi from "../api/settingApi";
 
 const { Title, Text } = Typography;
 
 export default function Footer() {
+    const [settings, setSettings] = useState([]);
+      const [loading, setLoading] = useState(true);
+    const fetchServices = useCallback(async () => {
+    // setLoading(true);
+    try {
+      const response = await settingApi.getAll(); 
+      setSettings(response|| []);
+    } catch (error) {
+      message.error("Lỗi kết nối API!");
+    } finally {
+      setTimeout(() => setLoading(false), 400);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchServices();
+  }, [fetchServices]);
+
   return (
     <footer style={{ background: "#1a1a1a", padding: "80px 10% 30px", color: "#fff" }}>
       <Row gutter={[40, 40]}>
         <Col xs={24} md={8}>
-          <Title level={3} style={{ color: "#eb2f96", marginBottom: 20 }}>HIGHSKIN SPA</Title>
+          <Title level={3} style={{ color: "#eb2f96", marginBottom: 20 }}>{settings.site_name}</Title>
           <Text style={{ color: "#aaa" }}>
             Hệ thống thẩm mỹ viện hàng đầu Việt Nam, mang lại vẻ đẹp tự nhiên và sự tự tin cho hàng triệu phụ nữ.
           </Text>
@@ -35,7 +54,7 @@ export default function Footer() {
         <Col xs={24} md={8}>
           <Title level={4} style={{ color: "#fff", marginBottom: 20 }}>Liên Hệ</Title>
           <Space direction="vertical" style={{ color: "#aaa" }}>
-            <Space><MapPin size={16} /> 123 Đường ABC, Quận 1, TP.HCM</Space>
+            <Space><MapPin size={16} /> Trường Đại học Mỏ Địa chất</Space>
             <Space><Phone size={16} /> 1900 XXXX</Space>
             <Space><Mail size={16} /> contact@highskin.vn</Space>
           </Space>
@@ -44,7 +63,7 @@ export default function Footer() {
       
       <Divider style={{ borderColor: "#333", margin: "50px 0 20px" }} />
       <div style={{ textAlign: "center", color: "#666", fontSize: "12px" }}>
-        © 2026 HIGHSKIN SPA. ALL RIGHTS RESERVED.
+        {settings.footer_note}
       </div>
     </footer>
   );
