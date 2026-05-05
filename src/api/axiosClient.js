@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:3008/api", // Địa chỉ Backend của mày
+  baseURL: process.env.REACT_APP_API_URL, // Địa chỉ Backend của mày
   headers: {
     "Content-Type": "application/json",
   },

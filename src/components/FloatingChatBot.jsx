@@ -51,35 +51,50 @@ export default function FloatingChatBot() {
     }, 15);
   };
 
-  const handleSend = async (customMessage = null) => {
-    const msg = customMessage || message;
-    if (!msg.trim() && !image) return;
-    if (loading) return;
+const handleSend = async (customMessage = null) => {
+  const msg = customMessage || message;
+  if (!msg.trim() && !image) return;
+  if (loading) return;
 
-    const imgFile = image;
-    if (msg) setChat(prev => [...prev, { sender: "user", text: msg }]);
-    if (imgFile) {
-      const preview = URL.createObjectURL(imgFile);
-      setChat(prev => [...prev, { sender: "user", image: preview }]);
+  const imgFile = image;
+
+  // Hiển thị tin nhắn user trước
+  if (msg) {
+    setChat(prev => [...prev, { sender: "user", text: msg }]);
+  }
+
+  if (imgFile) {
+    const preview = URL.createObjectURL(imgFile);
+    setChat(prev => [...prev, { sender: "user", image: preview }]);
+  }
+
+  setMessage("");
+  setImage(null);
+  setLoading(true);
+
+  try {
+    const res = await sendChatbot({ message: msg, image: imgFile });
+
+    if (!res?.success || !res?.reply) {
+      typeText("Hiện hệ thống đang quá tải, bạn thử lại sau nhé 💖");
+      return;
     }
 
-    setMessage("");
-    setImage(null);
-    setLoading(true);
+    typeText(res.reply);
 
-    try {
-      const res = await sendChatbot({ message: msg, image: imgFile });
-      if (!res || !res.reply) {
-        typeText("Cảm ơn bạn, chuyên viên sẽ liên hệ lại ngay ạ! ✨");
-      } else {
-        typeText(res.reply);
-      }
-    } catch (err) {
-      setChat(prev => [...prev, { sender: "bot", text: "Hệ thống bận, bạn thử lại nhé! ❤️" }]);
-    } finally {
-      setLoading(false);
+  } catch (err) {
+    console.log("❌ FE Error:", err?.response?.data || err.message);
+
+    if (err?.response?.status === 429) {
+      typeText("Spa đang nhận quá nhiều yêu cầu, bạn đợi chút nhé 🌸");
+    } else {
+      typeText("Hệ thống tạm thời gián đoạn, bạn thử lại sau nhé ❤️");
     }
-  };
+
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div style={styles.wrapper}>

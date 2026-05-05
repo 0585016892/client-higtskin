@@ -67,7 +67,7 @@ return (
       <Space size="large" className="nav-links">
         <Link to="/"><Text strong style={{ color: scrolled ? "#333" : "#555" }}>TRANG CHỦ</Text></Link>
         <Link to="/services"><Text strong style={{ color: scrolled ? "#333" : "#555" }}>DỊCH VỤ</Text></Link>
-        <Link to="/booking"><Text strong style={{ color: scrolled ? "#333" : "#555" }}>ĐẶT LỊCH</Text></Link>
+        <Link to="/booking"><Text strong style={{ color: scrolled ? "#333" : "#555" }}>SẢN PHẨM</Text></Link>
       </Space>
 
       <Space>
